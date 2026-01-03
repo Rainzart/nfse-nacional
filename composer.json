@@ -32,7 +32,7 @@
     "tecnickcom/tcpdf": "^6.7",
     "nfephp-org/sped-common": "^5.1",
     "ext-dom": "*",
-    "nesbot/carbon": "^3.8",
+    "nesbot/carbon": "^3.8 | ^2.0",
     "ext-curl": "*",
     "ext-zlib": "*",
     "ext-openssl": "*"
