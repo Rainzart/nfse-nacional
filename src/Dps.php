@@ -705,16 +705,14 @@ if (isset($this->std->infdps->serv->atvevento)) {
     }
 }
         //TODO Fazer grupo explRod
-        //TODO Fazer grupo infoCompl
-
 
         if (isset($this->std->infdps->serv->infocompl->xinfcomp)) {
             $infocompl_inner = $this->dom->createElement('infoCompl');
             $serv_inner->appendChild($infocompl_inner);
 
             $this->dom->addChild(
-                $cserv_inner,
-                'cTribNac',
+                $infocompl_inner,
+                'xInfComp',
                 $this->std->infdps->serv->infocompl->xinfcomp,
                 true
             );
@@ -1384,5 +1382,4 @@ if (isset($this->std->infdps->serv->atvevento)) {
 
         return $codigo;
     }
-
 }
