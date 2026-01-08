@@ -1402,9 +1402,9 @@ class Dps implements DpsInterface
         } else {
             $inscricao = $this->std->infdps->prest->cpf;
         }
-        $string .= mb_str_pad($inscricao, 14, '0', STR_PAD_LEFT); // Inscrição Federal (14 - CPF completar com 000 à esquerda) +
-        $string .= mb_str_pad($this->std->infdps->serie, 5, '0', STR_PAD_LEFT); // Série DPS (5) +
-        $string .= mb_str_pad($this->std->infdps->ndps, 15, '0', STR_PAD_LEFT); // Série DPS (5) +
+        $string .= mb_str_pad((string) $inscricao, 14, '0', STR_PAD_LEFT); // Inscrição Federal (14 - CPF completar com 000 à esquerda) +
+        $string .= mb_str_pad((string) $this->std->infdps->serie, 5, '0', STR_PAD_LEFT); // Série DPS (5) +
+        $string .= mb_str_pad((string) $this->std->infdps->ndps, 15, '0', STR_PAD_LEFT); // Série DPS (5) +
         $this->dpsId = $string;
 
         return $string;
