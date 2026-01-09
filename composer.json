@@ -31,6 +31,7 @@
     "symfony/var-dumper": "^7.1 | ^6.0",
     "tecnickcom/tcpdf": "^6.7",
     "nfephp-org/sped-common": "^5.1",
+    "nfephp-org/sped-da": "dev-master",
     "ext-dom": "*",
     "nesbot/carbon": "^3.8 | ^2.0",
     "ext-curl": "*",
