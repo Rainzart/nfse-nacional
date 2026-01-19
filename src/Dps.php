@@ -706,7 +706,7 @@ if (isset($this->std->infdps->serv->atvevento)) {
 }
         //TODO Fazer grupo explRod
 
-        
+
         // Grupo de informações complementares disponível para todos os serviços prestados
         if (isset($this->std->infdps->serv->infocompl->iddoctec)) {
             if (!isset($infocompl_inner)) {
@@ -741,18 +741,6 @@ if (isset($this->std->infdps->serv->atvevento)) {
                 $infocompl_inner,
                 'xPed',
                 $this->std->infdps->serv->infocompl->xped,
-                true
-            );
-        }
-        if (isset($this->std->infdps->serv->infocompl->gitemped)) {
-            if (!isset($infocompl_inner)) {
-                $infocompl_inner = $this->dom->createElement('infoCompl');
-                $serv_inner->appendChild($infocompl_inner);
-            }
-            $this->dom->addChild(
-                $infocompl_inner,
-                'gItemPed',
-                $this->std->infdps->serv->infocompl->gitemped,
                 true
             );
         }
