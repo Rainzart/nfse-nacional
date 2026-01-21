@@ -738,12 +738,94 @@ class Dps implements DpsInterface
                 }
             }
         }
-        // TODO Fazer grupo explRod
 
+        if (isset($this->std->infdps->serv->atvevento->end->xlgr)) {
+            $this->dom->addChild(
+                $end_evento_inner,
+                'xLgr',
+                $this->std->infdps->serv->atvevento->end->xlgr,
+                true
+            );
+        }
+
+        if (isset($this->std->infdps->serv->atvevento->end->nro)) {
+            $this->dom->addChild(
+                $end_evento_inner,
+                'nro',
+                $this->std->infdps->serv->atvevento->end->nro,
+                true
+            );
+        }
+
+        if (isset($this->std->infdps->serv->atvevento->end->xbairro)) {
+            $this->dom->addChild(
+                $end_evento_inner,
+                'xBairro',
+                $this->std->infdps->serv->atvevento->end->xbairro,
+                true
+            );
+        }
+    }
+}
+        //TODO Fazer grupo explRod
+
+
+        // Grupo de informações complementares disponível para todos os serviços prestados
+        if (isset($this->std->infdps->serv->infocompl->iddoctec)) {
+            if (!isset($infocompl_inner)) {
+                $infocompl_inner = $this->dom->createElement('infoCompl');
+                $serv_inner->appendChild($infocompl_inner);
+            }
+            $this->dom->addChild(
+                $infocompl_inner,
+                'idDocTec',
+                $this->std->infdps->serv->infocompl->iddoctec,
+                true
+            );
+        }
+        if (isset($this->std->infdps->serv->infocompl->docref)) {
+            if (!isset($infocompl_inner)) {
+                $infocompl_inner = $this->dom->createElement('infoCompl');
+                $serv_inner->appendChild($infocompl_inner);
+            }
+            $this->dom->addChild(
+                $infocompl_inner,
+                'docRef',
+                $this->std->infdps->serv->infocompl->docref,
+                true
+            );
+        }
+        if (isset($this->std->infdps->serv->infocompl->xped)) {
+            if (!isset($infocompl_inner)) {
+                $infocompl_inner = $this->dom->createElement('infoCompl');
+                $serv_inner->appendChild($infocompl_inner);
+            }
+            $this->dom->addChild(
+                $infocompl_inner,
+                'xPed',
+                $this->std->infdps->serv->infocompl->xped,
+                true
+            );
+        }
+        if (isset($this->std->infdps->serv->infocompl->gitemped->xitemped)) {
+            if (!isset($infocompl_inner)) {
+                $infocompl_inner = $this->dom->createElement('infoCompl');
+                $serv_inner->appendChild($infocompl_inner);
+            }
+            $gItemPed_inner = $this->dom->createElement('gItemPed');
+            $infocompl_inner->appendChild($gItemPed_inner);
+            $this->dom->addChild(
+                $gItemPed_inner,
+                'xItemPed',
+                $this->std->infdps->serv->infocompl->gitemped->xitemped,
+                true
+            );
+        }
         if (isset($this->std->infdps->serv->infocompl->xinfcomp)) {
-            $infocompl_inner = $this->dom->createElement('infoCompl');
-            $serv_inner->appendChild($infocompl_inner);
-
+            if (!isset($infocompl_inner)) {
+                $infocompl_inner = $this->dom->createElement('infoCompl');
+                $serv_inner->appendChild($infocompl_inner);
+            }
             $this->dom->addChild(
                 $infocompl_inner,
                 'xInfComp',
