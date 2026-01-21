@@ -738,37 +738,7 @@ class Dps implements DpsInterface
                 }
             }
         }
-
-        if (isset($this->std->infdps->serv->atvevento->end->xlgr)) {
-            $this->dom->addChild(
-                $end_evento_inner,
-                'xLgr',
-                $this->std->infdps->serv->atvevento->end->xlgr,
-                true
-            );
-        }
-
-        if (isset($this->std->infdps->serv->atvevento->end->nro)) {
-            $this->dom->addChild(
-                $end_evento_inner,
-                'nro',
-                $this->std->infdps->serv->atvevento->end->nro,
-                true
-            );
-        }
-
-        if (isset($this->std->infdps->serv->atvevento->end->xbairro)) {
-            $this->dom->addChild(
-                $end_evento_inner,
-                'xBairro',
-                $this->std->infdps->serv->atvevento->end->xbairro,
-                true
-            );
-        }
-    }
-}
-        //TODO Fazer grupo explRod
-
+        // TODO Fazer grupo explRod
 
         // Grupo de informações complementares disponível para todos os serviços prestados
         if (isset($this->std->infdps->serv->infocompl->iddoctec)) {
