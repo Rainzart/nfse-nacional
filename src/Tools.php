@@ -23,7 +23,7 @@ class Tools extends RestCurl
         if ($retorno) {
             $base_decode = base64_decode($retorno['nfseXmlGZipB64']);
             $gz_decode = gzdecode($base_decode);
-            return mb_convert_encoding($gz_decode, 'ISO-8859-1', 'UTF-8');
+            return mb_convert_encoding($gz_decode, 'UTF-8', 'ISO-8859-1');
         }
         return null;
     }
@@ -43,7 +43,7 @@ class Tools extends RestCurl
             $operacao = str_replace("/{tipoEvento}/{nSequencial}", "", $operacao);
         }
         $operacao .= str_replace("{tipoEvento}", $tipoEvento, $operacao);
-        
+
         if (!$nSequencial) {
             $operacao = str_replace("/{nSequencial}", "", $operacao);
         }

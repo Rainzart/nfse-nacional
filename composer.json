@@ -31,7 +31,8 @@
     "nesbot/carbon": "^3.8",
     "ext-curl": "*",
     "ext-zlib": "*",
-    "ext-openssl": "*"
+    "ext-openssl": "*",
+    "ext-mbstring": "*"
   },
   "config": {
     "optimize-autoloader": true
