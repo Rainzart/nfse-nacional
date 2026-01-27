@@ -7,6 +7,7 @@ use Hadder\NfseNacional\Common\RestBase;
 use NFePHP\Common\Certificate;
 use NFePHP\Common\Exception\SoapException;
 use NFePHP\Common\Signer;
+use RuntimeException;
 
 class RestCurl extends RestBase
 {
@@ -50,14 +51,12 @@ class RestCurl extends RestBase
         parent::__construct($cert);
         $this->config = json_decode($config);
         $this->certificate = $cert;
-        //        $this->wsobj = $this->loadWsobj($this->config->cmun);
-
         $configFile = __DIR__ . '/../storage/prefeituras.json';
-        $this->loadConfigOverrides($configFile, $this->config->prefeitura);
-        
+
+        $this->loadConfigOverrides($configFile, $this->config->prefeitura ?? null);
     }
 
-    private function loadConfigOverrides($jsonFile, $context): void 
+    private function loadConfigOverrides($jsonFile, $context): void
     {
         $json = json_decode(file_get_contents($jsonFile) ?: "", true);
 
@@ -106,7 +105,7 @@ class RestCurl extends RestBase
             ];
             $oCurl = curl_init();
             $api_url = $this->url_api;
-            if (strlen($operacao) > 0){
+            if (strlen($operacao) > 0) {
                 $api_url .= '/' . $operacao;
             }
             curl_setopt($oCurl, CURLOPT_URL, $api_url);
@@ -139,7 +138,7 @@ class RestCurl extends RestBase
                 curl_setopt($oCurl, CURLOPT_POST, 1);
                 curl_setopt($oCurl, CURLOPT_POSTFIELDS, $data);
                 curl_setopt($oCurl, CURLOPT_HTTPHEADER, $parameters);
-            }elseif ($origem === 3 && !empty($this->cookies)) {
+            } elseif ($origem === 3 && !empty($this->cookies)) {
                 $parameters[] = 'Cookie: ' . $this->cookies;
                 curl_setopt($oCurl, CURLOPT_HTTPHEADER, $parameters);
             }
@@ -157,9 +156,9 @@ class RestCurl extends RestBase
             $this->responseHead = trim(substr($response, 0, $headsize));
             $this->responseBody = trim(substr($response, $headsize));
             //detecta redirect, conseguiu logar com certificado na origem 3 e pega cookies
-            if($origem==3 and $httpcode==302) {
+            if ($origem == 3 and $httpcode == 302) {
                 $this->captureCookies($this->responseHead, $origem);
-                return ['sucesso'=>true];
+                return ['sucesso' => true];
             }
             if ($contentType == 'application/pdf') {
                 return $this->responseBody;
@@ -192,7 +191,7 @@ class RestCurl extends RestBase
             //            $this->requestHead = implode("\n", $parameters);
             $oCurl = curl_init();
             $api_url = $this->url_api;
-            if (strlen($operacao) > 0){
+            if (strlen($operacao) > 0) {
                 $api_url .= '/' . $operacao;
             }
             curl_setopt($oCurl, CURLOPT_URL, $api_url);
