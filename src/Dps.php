@@ -822,6 +822,16 @@ if (isset($this->std->infdps->serv->atvevento)) {
             $this->std->infdps->valores->trib->tribmun->tribissqn,
             true
         );
+
+        if(isset($this->std->infdps->valores->trib->tribmun->tribissqn) && $this->std->infdps->valores->trib->tribmun->tribissqn == 3){
+            $this->dom->addChild(
+                $tribmun_inner,
+                'cPaisResult',
+                $this->std->infdps->valores->trib->tribmun->cpaisresult,
+                true
+            );
+        }
+
         if (isset($this->std->infdps->valores->trib->tribmun->tpretissqn)) {
             $this->dom->addChild(
                 $tribmun_inner,
