@@ -793,7 +793,7 @@ if (isset($this->std->infdps->serv->atvevento)) {
         //TODO Fazer grupo vDescCondIncond
 		// Grupo vDescCondIncond (dentro de <valores>)
 		$vDescIncond = $this->std->infdps->valores->vdesccondincond->vdescincond ?? null;
-		$vDescCond   = $this->std->infdps->valores->vdesccondincond->vdesccond   ?? null;
+		$vDescCond   = $this->std->infdps->valores->vdesccondincond->vdesccond   ?? null; 
 
 		// regra: considera vazio se null, string vazia, ou "0.00" (ajuste se quiser manter 0.00)
 		$temDescIncond = ($vDescIncond !== null && $vDescIncond !== '' && $vDescIncond !== '0.00');
