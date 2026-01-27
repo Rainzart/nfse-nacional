@@ -42,12 +42,12 @@ class Tools extends RestCurl
         if (!$tipoEvento) {
             $operacao = str_replace("/{tipoEvento}/{nSequencial}", "", $operacao);
         }
-        $operacao .= str_replace("{tipoEvento}", $tipoEvento, $operacao);
+        $operacao = str_replace("{tipoEvento}", $tipoEvento, $operacao);
 
         if (!$nSequencial) {
             $operacao = str_replace("/{nSequencial}", "", $operacao);
         }
-        $operacao .= str_replace("{nSequencial}", $nSequencial, $operacao);
+        $operacao = str_replace("{nSequencial}", $nSequencial, $operacao);
 
         $retorno = $this->getData($operacao);
         return $retorno;
