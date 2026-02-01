@@ -1,5 +1,5 @@
 {
-    "americana-sp": {
+    "3501608": {
         "urls": {
             "sefin_producao": "https://nfse.americana.sp.gov.br/api/adn/dps/recepcao",
             "sefin_homologacao": "https://americanahomologacao.nfe.com.br/api/adn/dps/recepcao"
@@ -7,6 +7,19 @@
         "operations":{
             "emitir_nfse" : "",
             "cancelar_nfse" : ""
+        }
+    },
+    "3547304": {
+        "urls": {
+            "sefin_producao": "https://nfsesantanadeparnaiba.simplissweb.com.br",
+            "sefin_homologacao": "https://producaorestrita.simplissweb.com.br",
+            "adn_producao": "https://nfsesantanadeparnaiba.simplissweb.com.br",
+            "adn_homologacao": "https://producaorestrita.simplissweb.com.br"
+        },
+        "operations":{
+            "emitir_nfse" : "nfse",
+            "cancelar_nfse" : "nfse/{chave}/eventos",
+            "consultar_danfse": "nfse/{chave}"
         }
     }
 }
