@@ -23,6 +23,10 @@
     {
       "name": "Luis Gustavo Santarosa Pinto",
       "email": "gustavo-computacao@hotmail.com"
+    },
+    {
+      "name": "Bruno Alvim",
+      "email": "bruno.alvim@ezcompany.com.br"
     }
   ],
   "minimum-stability": "dev",
