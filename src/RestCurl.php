@@ -398,7 +398,7 @@ class RestCurl extends RestBase
 
                 // se tiver erro corrige a forma que está escrito a key "codigo" para "Codigo"(para ficar igual ao sistema nacional)
                 if (isset($return['erros'])) {
-                    if (count($return['erros']) > 0) {
+                    if (!empty($return['erros'])) {
                         foreach($return['erros'] as $key => $item) {
                             foreach($item as $keyR => $itemR) {
                                 if ($keyR === 'codigo') {
