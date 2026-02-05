@@ -43,6 +43,7 @@ class RestCurl extends RestBase
     public string $responseBody;
     private string $requestHead;
     private string $cookies = '';
+    private int $eventoPronim = 0;
 
     protected $canonical = [true, false, null, null];
 
@@ -357,7 +358,7 @@ class RestCurl extends RestBase
     /**
      * Função para refatorar a requisição/resposta para o formato esperado pelo provedor Pronim
      * @param string|array $data requisição já comprimida e em base64 ou array de resposta
-     * @param int $evento tipo de evento 1 = envio de DPS, 2 = cancelamento de DPS, 99 = resposta da requisição
+     * @param int $evento tipo de evento 1 = envio de DPS, 2 = cancelamento de DPS, 999 = resposta da requisição
      * @return array|string requisição refatorada conforme o provedor
      * @author leandro-mafra
      */
