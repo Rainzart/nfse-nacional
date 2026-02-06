@@ -405,6 +405,10 @@ class RestCurl extends RestBase
                                     unset($return['erros'][$key]['codigo']); // remove a key com texto incorreto
                                     $return['erros'][$key]['Codigo'] = $itemR; // adiciona a key com o texto correto
                                 }
+                                if ($keyR === 'descricao') {
+                                    unset($return['erros'][$key]['descricao']); // remove a key com texto incorreto
+                                    $return['erros'][$key]['Descricao'] = $itemR; // adiciona a key com o texto correto
+                                }
                             }
                         }
                     } else {
