@@ -36,7 +36,7 @@ class Tools extends RestCurl
                 // retorno padrão do sistema nacional
                 $retornoR = $retorno['nfseXmlGZipB64'];
             }
-            $base_decode = base64_decode($retorno['nfseXmlGZipB64']);
+            $base_decode = base64_decode($retornoR);
             $gz_decode = gzdecode($base_decode);
             return $encoding ? mb_convert_encoding($gz_decode, 'ISO-8859-1') : $gz_decode;
         }
