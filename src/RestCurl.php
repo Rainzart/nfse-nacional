@@ -43,7 +43,7 @@ class RestCurl extends RestBase
     public string $responseBody;
     private string $requestHead;
     private string $cookies = '';
-    private int $eventoPronim = 0;
+    private int $eventogovCloud = 0;
 
     protected $canonical = [true, false, null, null];
 
@@ -316,7 +316,7 @@ class RestCurl extends RestBase
 
     /**
      * Função para refatorar a requisição para o formato correto esperado pelo provedor, ou a resposta da requisição para poder manter uma saída padrão, ou pelo menos o mais próximo para manter a compatibilidade
-     * Alguns municípios com provedor próprio (Pronim é um deles) tem a requisição/resposta num formato um pouco diferente do sistema nacional
+     * Alguns municípios com provedor próprio (govCloud é um deles) tem a requisição/resposta num formato um pouco diferente do sistema nacional
      * Esta função vai refatorar a requisição/resposta para ficar de acordo com o que o provedor espera
      * @param string|array $data requisição já comprimida e em base64 ou array de resposta
      * @param int $evento tipo de evento 1 = envio de DPS, 2 = cancelamento de DPS, 999 = resposta da requisição(até o momento é esperado que sejá usado apenas para envio de DPS e Eventos )
@@ -330,9 +330,9 @@ class RestCurl extends RestBase
         switch($this->config->prefeitura){
             case '3118601': // Contagem - MG
             case '3542404': // Regente Feijó - SP
-                // pronim
+                // govCloud
                 // tando o envio quanto o cancelamento tem o mesmo formato
-                $return = $this->pronimRefactor($data, $evento);
+                $return = $this->govCloudRefactor($data, $evento);
                 break;
             default:
                 // sistema nacional - qualquer outro município
@@ -356,13 +356,13 @@ class RestCurl extends RestBase
     }
 
     /**
-     * Função para refatorar a requisição/resposta para o formato esperado pelo provedor Pronim
+     * Função para refatorar a requisição/resposta para o formato esperado pelo provedor govCloud
      * @param string|array $data requisição já comprimida e em base64 ou array de resposta
      * @param int $evento tipo de evento 1 = envio de DPS, 2 = cancelamento de DPS, 999 = resposta da requisição
      * @return array|string requisição refatorada conforme o provedor
      * @author leandro-mafra
      */
-    private function pronimRefactor(string|array $data, int $evento): array|string
+    private function govCloudRefactor(string|array $data, int $evento): array|string
     {
         $return = [];
 
@@ -382,7 +382,7 @@ class RestCurl extends RestBase
                 unset($arrayTemp1['lote']);
                 $return = array_merge($arrayTemp1, $arrayTemp2);
 
-                if ($this->eventoPronim == 1) {
+                if ($this->eventogovCloud == 1) {
                     // no sistema nacioanl a nota emitida vem nessa posição 'nfseXmlGZipB64'
                     $return['nfseXmlGZipB64'] = $return['xmlGZipB64'] ?? null;
                     if (array_key_exists('xmlGZipB64', $return)) {
@@ -425,7 +425,7 @@ class RestCurl extends RestBase
                 'LoteXmlGZipB64' => [$data]
             ];
 
-            $this->eventoPronim = $evento;
+            $this->eventogovCloud = $evento;
         }
         return $return;
     }

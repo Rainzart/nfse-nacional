@@ -19,7 +19,7 @@ class Tools extends RestCurl
 
         if (
             isset($retorno['erro']) ||
-            is_null($retorno) // culpa da pronim que retorna null quando a nota não é encontrada, ao invés de um erro
+            is_null($retorno) // culpa da govCloud que retorna null quando a nota não é encontrada, ao invés de um erro
         ) {
             return $retorno;
         }
@@ -30,7 +30,7 @@ class Tools extends RestCurl
                 isset($retorno['notas'][0]) &&
                 isset($retorno['notas'][0]['xmlGZipB64'])
             ) {
-                // retorno padrão da pronim
+                // retorno padrão da govCloud
                 $retornoR = $retorno['notas'][0]['xmlGZipB64'];
             } else {
                 // retorno padrão do sistema nacional
@@ -73,16 +73,16 @@ class Tools extends RestCurl
          */
         $retorno = null;
         if (is_null($retornoTemp)) {
-            // até agora só a pronim retornou null quando não encontra a nota
+            // até agora só a govCloud retornou null quando não encontra a nota
             $retorno = $retornoTemp;
         } elseif(
             !isset($retornoTemp['eventos']) &&
-            (   // identifica o retorno padrão da pronim
+            (   // identifica o retorno padrão da govCloud
                 isset($retornoTemp[0]) &&
                 isset($retornoTemp[0]['xmlGZipB64'])
             )
         ) {
-            // como a rota de eventos da pronim devolve todos os eventos dentro dele
+            // como a rota de eventos da govCloud devolve todos os eventos dentro dele
             $tempArray = [];
             foreach ($retornoTemp as $evento) {
                 if (
