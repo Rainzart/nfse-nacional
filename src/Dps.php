@@ -822,6 +822,16 @@ class Dps implements DpsInterface
             true
         );
 
+        if (isset($this->std->infdps->valores->trib->tribmun->tribissqn) && $this->std->infdps->valores->trib->tribmun->tribissqn == 
+                2 && isset($this->std->infdps->valores->trib->tribmun->tpimunidade)) {
+            $this->dom->addChild(
+                $tribmun_inner,
+                'tpImunidade',
+                $this->std->infdps->valores->trib->tribmun->tpimunidade,
+                true
+            );
+        }
+
         if(isset($this->std->infdps->valores->trib->tribmun->tribissqn) && $this->std->infdps->valores->trib->tribmun->tribissqn == 3){
             $this->dom->addChild(
                 $tribmun_inner,
