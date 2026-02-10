@@ -127,6 +127,7 @@ try {
     $std->infDPS->valores->trib = new stdClass();
     $std->infDPS->valores->trib->tribMun = new stdClass();
     $std->infDPS->valores->trib->tribMun->tribISSQN = 1; // Tributação do ISSQN sobre o serviço prestado: 1 - Operação tributável; 2 - Imunidade 3 - Exportação de serviço; 4 - Não Incidência;
+    // $std->infDPS->valores->trib->tribMun->tpImunidade = 2; // Se a tributação do ISSQN for igual a "2 - Imunidade" é necessário especificar o tipo de imunidade: 1 - Patrimônio, renda ou serviços, uns dos outros (CF88, Art 150, VI, "a"); 2 - Templos de qualquer culto (CF88, Art 150, VI, "b"); 3 - Patrimônio, renda ou serviços dos partidos políticos, inclusive suas fundações, das entidades sindicais dos trabalhadores, das instituições de educação e de assistência social, sem fins lucrativos, atendidos os requisitos da lei (CF88, Art 150, VI, "c"); 4 - Livros, jornais, periódicos e o papel destinado a sua impressão (CF88, Art 150, VI, "d"); 5 - Fonogramas e videofonogramas musicais produzidos no Brasil contendo obras musicais ou literomusicais de autores brasileiros e/ou obras em geral interpretadas por artistas brasileiros bem como os suportes materiais ou arquivos digitais que os contenham, salvo na etapa de replicação industrial de mídias ópticas de leitura a laser. (CF88, Art 150, VI, "e")
     $std->infDPS->valores->trib->tribMun->tpRetISSQN = 1; //Tipo de retencao do ISSQN: 1 - Não Retido; 2 - Retido pelo Tomador; 3 - Retido pelo Intermediario;
 
     $std->infDPS->valores->trib->totTrib = new stdClass();
