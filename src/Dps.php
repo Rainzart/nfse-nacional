@@ -622,11 +622,97 @@ class Dps implements DpsInterface
                 'mdic',
                 $this->std->infdps->serv->comext->mdic
             );
+        }
 
+        // Monta grupo obra
+        if (isset($this->std->infdps->serv->obra)) {
+            $obra_inner = $this->dom->createElement('obra');
+            $serv_inner->appendChild($obra_inner);
+
+            // inscImobFisc (opcional)
+            if (isset($this->std->infdps->serv->obra->inscimobfisc)) {
+                $this->dom->addChild(
+                    $obra_inner,
+                    'inscImobFisc',
+                    $this->std->infdps->serv->obra->inscimobfisc,
+                    true
+                );
+            }
+
+            // cObra (normalmente obrigatório quando obra existir)
+            if (isset($this->std->infdps->serv->obra->cobra)) {
+                $this->dom->addChild(
+                    $obra_inner,
+                    'cObra',
+                    $this->std->infdps->serv->obra->cobra,
+                    true
+                );
+            }
+
+            // cCIB (validação do layout pode rejeitar se inválido)
+            if (isset($this->std->infdps->serv->obra->ccib)) {
+                $this->dom->addChild(
+                    $obra_inner,
+                    'cCIB',
+                    $this->std->infdps->serv->obra->ccib,
+                    true
+                );
+            }
+
+            // end (endereço nacional)
+            if (isset($this->std->infdps->serv->obra->end)) {
+                $end_obra_inner = $this->dom->createElement('end');
+                $obra_inner->appendChild($end_obra_inner);
+
+                if (isset($this->std->infdps->serv->obra->end->cep)) {
+                    $this->dom->addChild(
+                        $end_obra_inner,
+                        'CEP',
+                        $this->std->infdps->serv->obra->end->cep,
+                        true
+                    );
+                }
+
+                if (isset($this->std->infdps->serv->obra->end->xlgr)) {
+                    $this->dom->addChild(
+                        $end_obra_inner,
+                        'xLgr',
+                        $this->std->infdps->serv->obra->end->xlgr,
+                        true
+                    );
+                }
+
+                if (isset($this->std->infdps->serv->obra->end->nro)) {
+                    $this->dom->addChild(
+                        $end_obra_inner,
+                        'nro',
+                        $this->std->infdps->serv->obra->end->nro,
+                        true
+                    );
+                }
+
+                // xCpl (opcional)
+                if (isset($this->std->infdps->serv->obra->end->xcpl)) {
+                    $this->dom->addChild(
+                        $end_obra_inner,
+                        'xCpl',
+                        $this->std->infdps->serv->obra->end->xcpl,
+                        true
+                    );
+                }
+
+                if (isset($this->std->infdps->serv->obra->end->xbairro)) {
+                    $this->dom->addChild(
+                        $end_obra_inner,
+                        'xBairro',
+                        $this->std->infdps->serv->obra->end->xbairro,
+                        true
+                    );
+                }
+            }
         }
 
         //TODO Fazer grupo lsadppu
-        //TODO Fazer grupo obra
         if (isset($this->std->infdps->serv->atvevento)) {
             $atvEvento_inner = $this->dom->createElement('atvEvento');
             $serv_inner->appendChild($atvEvento_inner);
