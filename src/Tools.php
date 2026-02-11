@@ -17,11 +17,26 @@ class Tools extends RestCurl
         $operacao = str_replace("{chave}", $chave, $this->getOperation('consultar_nfse'));
         $retorno = $this->getData($operacao);
 
-        if (isset($retorno['erro'])) {
+        if (
+            isset($retorno['erro']) ||
+            is_null($retorno) // culpa da govCloud que retorna null quando a nota não é encontrada, ao invés de um erro
+        ) {
             return $retorno;
         }
         if ($retorno) {
-            $base_decode = base64_decode($retorno['nfseXmlGZipB64']);
+            $retornoR = null;
+            if (
+                isset($retorno['notas']) &&
+                isset($retorno['notas'][0]) &&
+                isset($retorno['notas'][0]['xmlGZipB64'])
+            ) {
+                // retorno padrão da govCloud
+                $retornoR = $retorno['notas'][0]['xmlGZipB64'];
+            } else {
+                // retorno padrão do sistema nacional
+                $retornoR = $retorno['nfseXmlGZipB64'];
+            }
+            $base_decode = base64_decode($retornoR);
             $gz_decode = gzdecode($base_decode);
             return $encoding ? mb_convert_encoding($gz_decode, 'ISO-8859-1') : $gz_decode;
         }
@@ -49,7 +64,74 @@ class Tools extends RestCurl
         }
         $operacao = str_replace("{nSequencial}", $nSequencial, $operacao);
 
-        $retorno = $this->getData($operacao);
+        $retornoTemp = $this->getData($operacao);
+
+        /**
+         * não sei se isso é um erro de homologação ou se via acontecer tbm na produção
+         * mas durante os meus testes, notas que foram canceladas com o evento 101101 json
+         * já notas que foram canceladas por substituição, retornam uma array vazia
+         */
+        $retorno = null;
+        if (is_null($retornoTemp)) {
+            // até agora só a govCloud retornou null quando não encontra a nota
+            $retorno = $retornoTemp;
+        } elseif(
+            !isset($retornoTemp['eventos']) &&
+            (   // identifica o retorno padrão da govCloud
+                isset($retornoTemp[0]) &&
+                isset($retornoTemp[0]['xmlGZipB64'])
+            )
+        ) {
+            // como a rota de eventos da govCloud devolve todos os eventos dentro dele
+            $tempArray = [];
+            foreach ($retornoTemp as $evento) {
+                if (
+                    is_null($tipoEvento) || // adiciona o evento se não for passado nenhum tipo de evento do parãmetro da função consultarNfseEventos()
+                    $tipoEvento == $evento['tipo'] // ou se o tipo de evento for passado for igual a um dos eventos recuperado
+                ) {
+                    $tempArray[] = [
+                        'chaveAcesso'                => $chave,
+                        'tipoEvento'                 => $evento['tipo'],
+                        'numeroPedidoRegistroEvento' => null, // o unico que não consegui recuperar
+                        'dataHoraRecebimento'        => $evento['dataInclusao'],
+                        'arquivoXml'                 => $evento['xmlGZipB64'],
+                    ];
+                }
+            }
+            // adiciona para que o retorno do evento fique o mais parecido com o do sistema nacional
+            // mas não consegue recuperar os campos, passarei eles como null
+            // "dataHoraProcessamento"
+            // "tipoAmbiente"
+            // "versaoAplicativo"
+            /**
+             * exemplo de requisição do sistema nacional
+             *
+             *   "dataHoraProcessamento" => "2026-02-05T16:42:08.0252693-03:00"
+             *   "tipoAmbiente" => 2
+             *   "versaoAplicativo" => "SefinNacional_1.6.0"
+             *   "eventos" => array:1 [
+             *       0 => array:5 [
+             *       "chaveAcesso" => "3106..."
+             *       "tipoEvento" => 105102
+             *       "numeroPedidoRegistroEvento" => 1
+             *       "dataHoraRecebimento" => "2026-02-02T17:32:31"
+             *       "arquivoXml" => "SDRzSUFBQUFBQUFFQUsxWTJaTHFTSE4rbFk2ZVMrSzB
+             */
+
+            $retorno = [
+                'dataHoraProcessamento' => null,
+                'tipoAmbiente' => null,
+                'versaoAplicativo' => null,
+            ];
+            // no sistema nacional quando não é encontrado nenhum evento a posição "eventos" não é passado
+            // farei o mesmo aqui
+            if (!empty($tempArray)) {
+                $retorno['eventos'] = $tempArray;
+            }
+        } else {
+            $retorno = $retornoTemp;
+        }
+
         return $retorno;
     }
 
@@ -99,9 +181,7 @@ class Tools extends RestCurl
         $content = '<?xml version="1.0" encoding="UTF-8"?>' . $content;
         $gz = gzencode($content);
         $data = base64_encode($gz);
-        $dados = [
-            'dpsXmlGZipB64' => $data
-        ];
+        $dados = $this->refactorFormatProvider($data, 1);
         $operacao = $this->getOperation('emitir_nfse');
         $retorno = $this->postData($operacao, json_encode($dados));
         return $retorno;
@@ -116,9 +196,7 @@ class Tools extends RestCurl
         $content = '<?xml version="1.0" encoding="UTF-8"?>' . $content;
         $gz = gzencode($content);
         $data = base64_encode($gz);
-        $dados = [
-            'pedidoRegistroEventoXmlGZipB64' => $data
-        ];
+        $dados = $this->refactorFormatProvider($data, 2);
         $operacao = str_replace("{chave}", $std->infPedReg->chNFSe, $this->getOperation('cancelar_nfse'));
         $retorno = $this->postData($operacao, json_encode($dados));
         return $retorno;
