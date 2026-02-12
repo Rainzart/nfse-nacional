@@ -17,7 +17,11 @@ class RestCurl extends RestBase
         "adn_homologacao" => "https://adn.producaorestrita.nfse.gov.br",
         "adn_producao" => "https://adn.nfse.gov.br",
         "nfse_homologacao" => "https://www.producaorestrita.nfse.gov.br/EmissorNacional",
-        "nfse_producao" => "https://www.nfse.gov.br/EmissorNacional"
+        "nfse_producao" => "https://www.nfse.gov.br/EmissorNacional",
+        "soap_producao" => "https://parademinas.mg.issqn.quasar.srv.br/nfe/snissdigitalsvc",
+        "soap_homologacao" => "https://parademinas.mg.des.issqn.quasar.tec.br/nfe/snissdigitalsvc",
+        "soap_wsdl_producao" => "https://parademinas.mg.issqn.quasar.srv.br/nfe/snissdigitalsvc?wsdl",
+        "soap_wsdl_homologacao" => "https://parademinas.mg.des.issqn.quasar.tec.br/nfe/snissdigitalsvc?wsdl"
     ];
     const DEFAULT_OPERATIONS = [
         "consultar_nfse" => "nfse/{chave}",
@@ -33,6 +37,7 @@ class RestCurl extends RestBase
     private $operations = [];
     private mixed $config;
     private string $url_api;
+    private string $url_api_wsdl;
     private $connection_timeout = 30;
     private $timeout = 30;
     private $httpver;
@@ -293,6 +298,18 @@ class RestCurl extends RestBase
                     $this->url_api = $this->urls['nfse_producao'];
                 }
                 break;
+            case 4: // SOAP
+                $this->url_api = $this->urls['soap_homologacao'];
+                if ($this->config->tpamb === 1) {
+                    $this->url_api = $this->urls['soap_producao'];
+                }
+
+                $this->url_api_wsdl = $this->urls['soap_wsdl_homologacao'];
+                if ($this->config->tpamb === 1) {
+                    $this->url_api_wsdl = $this->urls['soap_wsdl_producao'];
+                }
+
+                break;
         }
 
     }
@@ -308,6 +325,46 @@ class RestCurl extends RestBase
         $cookies = array_map('trim', $matches[1]);
         if (!empty($cookies)) {
             $this->cookies = implode('; ', $cookies);
+        }
+    }
+
+    public function postSoap (string $operation, string $content, int $origin = 4) : array
+    {
+        $this->resolveUrl($origin);
+
+        $client = new \SoapClient($this->url_api_wsdl, [
+            'trace'         => 1,
+            'exceptions'    => true,
+            'cache_wsdl'    => WSDL_CACHE_NONE,
+            'location'      => $this->url_api,   // força envio no endpoint
+        ]);
+
+        try {
+            $resp = $client->__soapCall($operation, [[ 'xml' => $content ]]);
+            return ['response' => $resp];
+        } catch (\SoapFault $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function getSoap (string $operation, string $content, int $origin = 4) : array
+    {
+        $this->resolveUrl($origin);
+
+        $client = new \SoapClient($this->url_api_wsdl, [
+            'trace'         => 1,
+            'exceptions'    => true,
+            'cache_wsdl'    => WSDL_CACHE_NONE,
+            'location'      => $this->url_api,   // força envio no endpoint
+        ]);
+
+        $resp = $client->__soapCall($operation, [[ 'xml' => $content ]]);
+
+        try {
+            $resp = $client->__soapCall($operation, [[ 'xml' => $content ]]);
+            return ['response' => $resp];
+        } catch (\SoapFault $e) {
+            return ['error' => $e->getMessage()];
         }
     }
 }

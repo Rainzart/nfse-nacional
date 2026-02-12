@@ -69,6 +69,15 @@ class Tools extends RestCurl
         return null;
     }
 
+    public function consultarDanfseWsdl(string $content, string $tag)
+    {
+        $content = $this->sign($content, $tag, 'Id', $tag);
+        $content = '<?xml version="1.0" encoding="UTF-8"?>' . $content;
+        $operacao = $this->getOperation('consultar_danfse');
+        $retorno = $this->getSoap($operacao, $content);
+        return $retorno;
+    }
+
     /**
      * Consulta o DANFSe via NFSe caso o serviço direto falhe
      *
@@ -104,6 +113,15 @@ class Tools extends RestCurl
         ];
         $operacao = $this->getOperation('emitir_nfse');
         $retorno = $this->postData($operacao, json_encode($dados));
+        return $retorno;
+    }
+
+    public function enviaDpsWsdl($content)
+    {
+        $content = $this->sign($content, 'infDPS', '', 'DPS');
+        $content = '<?xml version="1.0" encoding="UTF-8"?>' . $content;
+        $operation = $this->getOperation('emitir_nfse');
+        $retorno = $this->postSoap($operation, $content);
         return $retorno;
     }
 
