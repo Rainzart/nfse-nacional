@@ -528,7 +528,6 @@ class Danfse extends DaCommon
         $qrX = $x + $this->wPrint - $qrSize - 2;
         $this->pdf->rect($qrX, $y + 2, $qrSize, $qrSize);
         
-        dd($this->infNfse);
         $idNfse = filter_var($this->infNfse['chave_acesso'], FILTER_SANITIZE_NUMBER_INT);
 
         $filename = 'qr-code_' . $idNfse . '.png';
