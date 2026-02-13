@@ -97,7 +97,7 @@ class Danfse extends DaCommon
     private function loadDoc($xml)
     {
         $this->xml = $xml;
-        
+
         if (empty($xml)) {
             throw new Exception('XML da NFSe não pode estar vazio!');
         }
@@ -115,6 +115,7 @@ class Danfse extends DaCommon
 
             // Converte para array para facilitar manipulação
             $stdClass = simplexml_load_string($xml);
+
             $json = json_encode($stdClass, JSON_OBJECT_AS_ARRAY);
             $this->nfseArray = json_decode($json, true);
 
@@ -135,7 +136,8 @@ class Danfse extends DaCommon
     private function parseNfseData()
     {
         // Padrão Nacional SEFIN (mais comum - estrutura NFSe/infNFSe)
-        if (isset($this->nfseArray['infNFSe'])) {
+
+        if (isset($this->nfseArray['infDPS'])) {
             $this->parseNfseNacional();
         }
         // Padrão GINFES
@@ -158,9 +160,9 @@ class Danfse extends DaCommon
      */
     private function parseNfseNacional()
     {
-        $infNfse = $this->nfseArray['infNFSe'] ?? [];
+        $infNfse = $this->nfseArray['infDPS'] ?? [];
         $dps = $infNfse['DPS']['infDPS'] ?? [];
-        
+
         // Informações principais da NFSe
         $this->infNfse = [
             'numero' => $infNfse['nNFSe'] ?? $infNfse['nDFSe'] ?? 'S/N',
@@ -525,7 +527,8 @@ class Danfse extends DaCommon
         $qrSize = 30;
         $qrX = $x + $this->wPrint - $qrSize - 2;
         $this->pdf->rect($qrX, $y + 2, $qrSize, $qrSize);
-
+        
+        dd($this->infNfse);
         $idNfse = filter_var($this->infNfse['chave_acesso'], FILTER_SANITIZE_NUMBER_INT);
 
         $filename = 'qr-code_' . $idNfse . '.png';
@@ -1306,7 +1309,7 @@ class Danfse extends DaCommon
 
     protected function statusNFSe()
     {
-        $obj = (object) $this->nfseArray['infNFSe'];
+        $obj = (object) $this->nfseArray['infDPS'];
         $resp = [
             'status' => true,
             'message' => [],
