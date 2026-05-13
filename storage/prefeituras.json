@@ -31,5 +31,41 @@
             "cancelar_nfse" : "nfse/{chave}/eventos",
             "consultar_danfse": "nfse/{chave}"
         }
+    },
+    "3118601": {
+        "urls": {
+            "sefin_producao": "https://nfse-contagem.govbr.cloud/NFSe.Api",
+            "sefin_homologacao": "https://reformatributaria.govbr.cloud/NFSe.Api.Teste",
+            "adn_producao": "https://nfse-contagem.govbr.cloud/NFSe.Api",
+            "adn_homologacao": "https://reformatributaria.govbr.cloud/NFSe.Api.Teste"
+        },
+        "operations":{
+            "emitir_nfse" : "NotaNacional/EnviarSincrono",
+            "cancelar_nfse" : "NotaNacional/EnviarSincrono",
+            "consultar_danfse": "NaoExisteEssaRota",
+            "consultar_nfse": "NotaNacional/ConsultarNFSe/{chave}",
+            "consultar_eventos": "/NotaNacional/ConsultarEventos/{chave}",
+            "consultar_dps": "/NotaNacional/ConsultarDPS/{documento}/{serie}/{numero}",
+            "consultar_danfse_nfse_certificado": "NaoExisteEssaRota",
+            "consultar_danfse_nfse_download": "NaoExisteEssaRota"
+        }
+    },
+    "3542404": {
+        "urls": {
+            "sefin_producao": "https://regentefeijo.govbr.cloud/NFSe.Api",
+            "sefin_homologacao": "https://reformatributaria.govbr.cloud/NFSe.Api.Teste",
+            "adn_producao": "https://regentefeijo.govbr.cloud/NFSe.Api",
+            "adn_homologacao": "https://reformatributaria.govbr.cloud/NFSe.Api.Teste"
+        },
+        "operations":{
+            "emitir_nfse" : "NotaNacional/EnviarSincrono",
+            "cancelar_nfse" : "NotaNacional/EnviarSincrono",
+            "consultar_danfse": "NaoExisteEssaRota",
+            "consultar_nfse": "NotaNacional/ConsultarNFSe/{chave}",
+            "consultar_eventos": "/NotaNacional/ConsultarEventos/{chave}",
+            "consultar_dps": "/NotaNacional/ConsultarDPS/{documento}/{serie}/{numero}",
+            "consultar_danfse_nfse_certificado": "NaoExisteEssaRota",
+            "consultar_danfse_nfse_download": "NaoExisteEssaRota"
+        }
     }
 }
