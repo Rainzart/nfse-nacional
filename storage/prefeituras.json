@@ -31,5 +31,18 @@
             "cancelar_nfse" : "nfse/{chave}/eventos",
             "consultar_danfse": "nfse/{chave}"
         }
+    },
+    "3147105": {
+        "urls": {
+            "soap_producao": "https://parademinas.mg.issqn.quasar.srv.br/nfe/snissdigitalsvc",
+            "soap_homologacao": "https://parademinas.mg.des.issqn.quasar.tec.br/nfe/snissdigitalsvc",
+            "soap_wsdl_producao": "https://parademinas.mg.issqn.quasar.srv.br/nfe/snissdigitalsvc?wsdl",
+            "soap_wsdl_homologacao": "https://parademinas.mg.des.issqn.quasar.tec.br/nfe/snissdigitalsvc?wsdl"
+        },
+        "operations":{
+            "emitir_nfse" : "RecepcionarDps",
+            "cancelar_nfse" : "",
+            "consultar_danfse": "ConsultarDps"
+        }
     }
 }
