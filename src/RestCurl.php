@@ -153,8 +153,8 @@ class RestCurl extends RestBase
             $headsize = curl_getinfo($oCurl, CURLINFO_HEADER_SIZE);
             $httpcode = curl_getinfo($oCurl, CURLINFO_HTTP_CODE);
             $contentType = curl_getinfo($oCurl, CURLINFO_CONTENT_TYPE);
-            $this->responseHead = trim(substr($response, 0, $headsize));
-            $this->responseBody = trim(substr($response, $headsize));
+            $this->responseHead = trim(substr((string)$response, 0, $headsize));
+            $this->responseBody = trim(substr((string)$response, $headsize));
             //detecta redirect, conseguiu logar com certificado na origem 3 e pega cookies
             if ($origem == 3 and $httpcode == 302) {
                 $this->captureCookies($this->responseHead, $origem);
@@ -229,8 +229,8 @@ class RestCurl extends RestBase
             }
             $headsize = curl_getinfo($oCurl, CURLINFO_HEADER_SIZE);
             $httpcode = curl_getinfo($oCurl, CURLINFO_HTTP_CODE);
-            $this->responseHead = trim(substr($response, 0, $headsize));
-            $this->responseBody = trim(substr($response, $headsize));
+            $this->responseHead = trim(substr((string)$response, 0, $headsize));
+            $this->responseBody = trim(substr((string)$response, $headsize));
             return json_decode($this->responseBody, true);
         } catch (Exception $e) {
             throw SoapException::unableToLoadCurl($e->getMessage());

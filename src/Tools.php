@@ -107,6 +107,40 @@ class Tools extends RestCurl
         return $retorno;
     }
 
+    /**
+     * Distribui DF-e a partir do último NSU informado (API ADN).
+     *
+     * Retorna até 50 documentos fiscais eletrônicos (NFS-e e Eventos)
+     * vinculados ao CPF/CNPJ do certificado digital utilizado na conexão.
+     * O interessado deve aguardar no mínimo 1 hora antes de nova consulta
+     * quando o retorno indicar que não há mais documentos (ultNSU == maxNSU).
+     *
+     * @param int $ultimoNsu Último NSU recebido. Use 0 na primeira consulta.
+     * @return array{ultNSU: string, maxNSU: string, loteDistDFe: array}|array
+     */
+    public function distribuirDfe(int $ultimoNsu = 0): array
+    {
+        $operacao = 'contribuintes/DFe/' . $ultimoNsu;
+        $retorno = $this->getData($operacao, null, 2);
+        return $retorno ?? [];
+    }
+
+    /**
+     * Consulta um DF-e específico pelo NSU informado (API ADN).
+     *
+     * Permite recuperar pontualmente um documento identificado como
+     * faltante na base de dados local.
+     *
+     * @param int $nsu Número Sequencial Único do documento
+     * @return array
+     */
+    public function consultarDfePorNsu(int $nsu): array
+    {
+        $operacao = 'contribuintes/DFe/' . $nsu;
+        $retorno = $this->getData($operacao, null, 2);
+        return $retorno ?? [];
+    }
+
     public function cancelaNfse($std)
     {
         $dps = new \Hadder\NfseNacional\Dps($std);
@@ -130,7 +164,7 @@ class Tools extends RestCurl
         $dom->formatOutput = false;
         $dom->preserveWhiteSpace = false;
         $dom->loadXML($content);
-        dump($dom->saveXML());
+        // dump($dom->saveXML());
         return $dom->C14N(false, false, null, null);
     }
 }

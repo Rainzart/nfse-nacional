@@ -278,7 +278,6 @@ class Dps implements DpsInterface
                     );
                 }
 
-                //                dd($this->std->infdps->prest->end);
                 $this->dom->addChild(
                     $end_inner,
                     'xLgr',
@@ -1522,16 +1521,16 @@ class Dps implements DpsInterface
     private function generateId()
     {
         $string = 'DPS';
-        $string .= substr($this->std->infdps->clocemi, 0, 7); //Cód.Mun. (7) +
+        $string .= substr((string)$this->std->infdps->clocemi, 0, 7); //Cód.Mun. (7) +
         $string .= isset($this->std->infdps->prest->cnpj) ? 2 : 1; //Tipo de Inscrição Federal (1) +
         if (isset($this->std->infdps->prest->cnpj)) {
             $inscricao = $this->std->infdps->prest->cnpj;
         } else {
             $inscricao = $this->std->infdps->prest->cpf;
         }
-        $string .= str_pad($inscricao, 14, 0, STR_PAD_LEFT); //Inscrição Federal (14 - CPF completar com 000 à esquerda) +
-        $string .= str_pad($this->std->infdps->serie, 5, 0, STR_PAD_LEFT); //Série DPS (5) +
-        $string .= str_pad($this->std->infdps->ndps, 15, 0, STR_PAD_LEFT); //Série DPS (5) +
+        $string .= str_pad((string)$inscricao, 14, '0', STR_PAD_LEFT); //Inscrição Federal (14 - CPF completar com 000 à esquerda) +
+        $string .= str_pad((string)$this->std->infdps->serie, 5, '0', STR_PAD_LEFT); //Série DPS (5) +
+        $string .= str_pad((string)$this->std->infdps->ndps, 15, '0', STR_PAD_LEFT); //Série DPS (5) +
         $this->dpsId = $string;
         return $string;
     }
