@@ -255,7 +255,7 @@ class DanfseTemplate
     /** @param array<string, mixed> $party */
     private static function partyBox(array $party, callable $h, string $title): string
     {
-        return '' . $gap . '<div class="section-title">' . $h($title) . '</div>
+        return self::gap() . '<div class="section-title">' . $h($title) . '</div>
         <table class="border" cellpadding="2">
             <tr>
                 <td style="width: 25%;"><span class="label">CNPJ / CPF / NIF</span><br>' . $h($party['documento'] ?? '') . '</td>
