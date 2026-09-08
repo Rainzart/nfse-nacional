@@ -15,6 +15,11 @@
       "Helpers.php"
     ]
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Hadder\\NfseNacional\\Tests\\": "tests/"
+    }
+  },
   "authors": [
     {
       "name": "Fernando Friedrich",
@@ -32,6 +37,12 @@
     "ext-zlib": "*",
     "ext-openssl": "*",
     "ext-mbstring": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.5|^9.6"
+  },
+  "scripts": {
+    "test": "phpunit"
   },
   "config": {
     "optimize-autoloader": true
