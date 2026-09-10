@@ -67,6 +67,59 @@ Como a Receita só atualiza suas APIs quando está inspirada, listamos abaixo as
 
 - CPF/CNPJ do **prestador** não existente/cadastrado/habilitado na NFSe Nacional/Prefeitura;
 
+## Preencher o tomador automaticamente pelo CPF/CNPJ (opcional)
+
+Recurso **100% opcional** que preenche o grupo `toma` (tomador) da DPS a partir de um CPF ou CNPJ, evitando digitar nome, endereço e código IBGE na mão. Nada do fluxo atual muda: quem não usar o recurso continua montando o `toma` normalmente.
+
+Os dados vêm da API da CPF.CNPJ (https://www.cpfcnpj.com.br), que entrega retorno em tempo real (D+0), cobertura de 100% das bases de CPF e CNPJ e, no CNPJ, informações adicionais como Simples Nacional e SIMEI.
+
+### Como obter o token
+
+O token é gerado no painel da CPF.CNPJ, em `API > Tokens`, e fica atrelado ao IP de origem da consulta. Para testar sem custo existe um token público que devolve dados fictícios:
+
+```
+5ae973d7a997af13f0aaf2bf60e65803
+```
+
+### Uso
+
+```php
+use Hadder\NfseNacional\Tomador\CpfCnpjComBrLookup;
+use Hadder\NfseNacional\Tomador\TomadorResolver;
+
+$resolver = new TomadorResolver(
+    new CpfCnpjComBrLookup('SEU_TOKEN')
+);
+
+$std->infDPS->toma = $resolver->porDocumento('00000000000');
+```
+
+O método `porDocumento()` detecta sozinho se o documento é CPF (11 dígitos) ou CNPJ (14 caracteres). Também é possível ser explícito com `porCpf()` e `porCnpj()`. O retorno é um `stdClass` no mesmo formato esperado por `Dps::render()`, pronto para ser atribuído a `$std->infDPS->toma`.
+
+Os pacotes padrão são o `3` para CPF (nome mais endereço completo e código IBGE) e o `6` para CNPJ (razão, fantasia, endereço, Simples Nacional, situação e porte). Para ajustar os pacotes ou apontar para outra base:
+
+```php
+$lookup = new CpfCnpjComBrLookup('SEU_TOKEN', [
+    'pacoteCpf' => 3,
+    'pacoteCnpj' => 6,
+]);
+```
+
+### Usando outra fonte de dados
+
+`TomadorResolver` depende apenas da interface `PessoaLookup`, então qualquer origem de dados (cache local, banco de dados ou outra API) pode ser usada implementando essa interface:
+
+```php
+use Hadder\NfseNacional\Tomador\PessoaLookup;
+use Hadder\NfseNacional\Tomador\PessoaTomador;
+
+class MinhaBaseLookup implements PessoaLookup
+{
+    public function consultarCpf(string $cpf): PessoaTomador { /* ... */ }
+    public function consultarCnpj(string $cnpj): PessoaTomador { /* ... */ }
+}
+```
+
 # CRÉDITOS (por Fernando Friedrich)
 
 Este pacote **não caiu do céu**, **não apareceu por geração espontânea** e muito menos foi escrito do zero em um surto de genialidade de minha parte.
