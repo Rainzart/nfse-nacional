@@ -106,6 +106,18 @@ class CpfCnpjComBrLookupTest extends TestCase
         $lookup->consultarCpf('11144477735');
     }
 
+    public function testTimeoutPadraoSegueRecomendacaoDaApi(): void
+    {
+        $lookup = new CpfCnpjComBrLookup('5ae973d7a997af13f0aaf2bf60e65803');
+        $propriedade = new \ReflectionProperty(CpfCnpjComBrLookup::class, 'timeout');
+        $propriedade->setAccessible(true);
+
+        $this->assertSame(60, $propriedade->getValue($lookup));
+
+        $personalizado = new CpfCnpjComBrLookup('5ae973d7a997af13f0aaf2bf60e65803', ['timeout' => 20]);
+        $this->assertSame(20, $propriedade->getValue($personalizado));
+    }
+
     public function testTokenVazioLancaExcecao(): void
     {
         $this->expectException(TomadorLookupException::class);

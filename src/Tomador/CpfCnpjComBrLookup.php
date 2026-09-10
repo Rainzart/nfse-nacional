@@ -49,7 +49,7 @@ class CpfCnpjComBrLookup implements PessoaLookup
         $this->baseUrl = rtrim($opcoes['baseUrl'] ?? 'https://api.cpfcnpj.com.br', '/');
         $this->pacoteCpf = (int) ($opcoes['pacoteCpf'] ?? 3);
         $this->pacoteCnpj = (int) ($opcoes['pacoteCnpj'] ?? 6);
-        $this->timeout = (int) ($opcoes['timeout'] ?? 15);
+        $this->timeout = (int) ($opcoes['timeout'] ?? 60);
 
         $transporte = $opcoes['transporte'] ?? null;
         if ($transporte !== null && !is_callable($transporte)) {
