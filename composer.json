@@ -1,9 +1,11 @@
 {
-  "name": "hadder/nfse-nacional",
-  "description": "Pacote para geração de NFSe Nacional usando componentes NFePHP (https://github.com/nfephp-org)",
+  "name": "ezapp-sistemas/nfse-nacional",
+  "description": "Componente para emissão e impressão de NFS-e Nacional (padrão CGNFS-e). Fork mantido pela EZAPP/Sygma com geração nativa do DANFSe conforme NT-008.",
   "keywords": [
     "nfse-nacional",
     "nfse",
+    "danfse",
+    "padrao-nacional",
     "mei"
   ],
   "license": "MIT",
@@ -18,7 +20,13 @@
   "authors": [
     {
       "name": "Fernando Friedrich",
-      "email": "fernando@hadder.com.br"
+      "email": "fernando@hadder.com.br",
+      "role": "Original author (hadder/nfse-nacional)"
+    },
+    {
+      "name": "Paulo Henrique de Castro",
+      "email": "phc@sygmasistemas.com.br",
+      "role": "Fork maintainer (EZAPP/Sygma)"
     }
   ],
   "minimum-stability": "dev",
@@ -27,6 +35,8 @@
     "symfony/var-dumper": "^7.1|^6.4",
     "tecnickcom/tcpdf": "^6.7",
     "nfephp-org/sped-common": "^5.1",
+    "setasign/fpdf": "^1.8",
+    "chillerlan/php-qrcode": "^5.0",
     "ext-dom": "*",
     "ext-curl": "*",
     "ext-zlib": "*",

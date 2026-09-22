@@ -3,3 +3,6 @@ composer.lock
 vendor/
 exemples/certs/
 exemples/local/
+# Smoke test outputs
+exemples/output/
+
