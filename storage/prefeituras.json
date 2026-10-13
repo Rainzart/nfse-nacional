@@ -1,22 +1,22 @@
 {
     "americana-sp": {
         "urls": {
-            "sefin_producao": "https://nfse.americana.sp.gov.br/api/adn/dps/recepcao",
-            "sefin_homologacao": "https://americanahomologacao.nfe.com.br/api/adn/dps/recepcao"
+            "sefin_producao": "https://nfse.americana.sp.gov.br/api/adn/dps",
+            "sefin_homologacao": "https://americanahomologacao.nfe.com.br/api/adn/dps"
         },
         "operations":{
-            "emitir_nfse" : "",
-            "cancelar_nfse" : ""
+            "emitir_nfse" : "recepcao",
+            "cancelar_nfse" : "evento"
         }
     },
     "3501608": {
         "urls": {
-            "sefin_producao": "https://nfse.americana.sp.gov.br/api/adn/dps/recepcao",
-            "sefin_homologacao": "https://americanahomologacao.nfe.com.br/api/adn/dps/recepcao"
+            "sefin_producao": "https://nfse.americana.sp.gov.br/api/adn/dps",
+            "sefin_homologacao": "https://americanahomologacao.nfe.com.br/api/adn/dps"
         },
         "operations":{
-            "emitir_nfse" : "",
-            "cancelar_nfse" : ""
+            "emitir_nfse" : "recepcao",
+            "cancelar_nfse" : "evento"
         }
     },
     "3547304": {

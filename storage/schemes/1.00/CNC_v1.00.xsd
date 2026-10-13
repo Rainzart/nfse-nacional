@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.sped.fazenda.gov.br/nfse"
+           xmlns="http://www.sped.fazenda.gov.br/nfse"
+           attributeFormDefault="unqualified"
+           elementFormDefault="qualified">
+  <xs:include schemaLocation="tiposCnc_v1.00.xsd"/>
+  <xs:element name="CNC" type="TCNC">
+    <xs:annotation>
+      <xs:documentation>Schema XML Leiaute do arquivo para upload - CNC</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+</xs:schema>

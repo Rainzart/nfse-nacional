@@ -1,24 +1,37 @@
 {
-  "name": "hadder/nfse-nacional",
+  "name": "quantumtecnology/nfse-nacional",
+  "license": "MIT",
   "description": "Pacote para geração de NFSe Nacional usando componentes NFePHP (https://github.com/nfephp-org)",
   "keywords": [
     "nfse-nacional",
     "nfse",
     "mei"
   ],
-  "license": "MIT",
   "autoload": {
     "psr-4": {
-      "Hadder\\NfseNacional\\": "src/"
+      "QuantumTecnology\\NfseNacional\\": "src/"
     },
     "files": [
       "Helpers.php"
     ]
   },
+  "autoload-dev": {
+    "psr-4": {
+      "QuantumTecnology\\NfseNacional\\Tests\\": "tests/"
+    }
+  },
   "authors": [
     {
       "name": "Fernando Friedrich",
       "email": "fernando@hadder.com.br"
+    },
+    {
+      "name": "Luis Gustavo Santarosa Pinto",
+      "email": "gustavo-computacao@hotmail.com"
+    },
+    {
+      "name": "Bruno Alvim",
+      "email": "bruno.alvim@ezcompany.com.br"
     }
   ],
   "minimum-stability": "dev",
@@ -27,11 +40,23 @@
     "symfony/var-dumper": "^7.1|^6.4",
     "tecnickcom/tcpdf": "^6.7",
     "nfephp-org/sped-common": "^5.1",
+    "nfephp-org/sped-da": "dev-master",
     "ext-dom": "*",
+    "nesbot/carbon": "^3.8 | ^2.0",
     "ext-curl": "*",
     "ext-zlib": "*",
     "ext-openssl": "*",
-    "ext-mbstring": "*"
+    "ext-mbstring": "*",
+    "chillerlan/php-qrcode": "^6.0"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.89",
+    "laravel/pint": "^1.0",
+    "phpunit/phpunit": "^12.0",
+    "smalot/pdfparser": "^2.12"
+  },
+  "scripts": {
+    "test": "phpunit"
   },
   "config": {
     "optimize-autoloader": true

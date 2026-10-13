@@ -1,5 +1,10 @@
 .idea/
 composer.lock
 vendor/
-exemples/certs/
-exemples/local/
+examples/certs/
+examples/local/
+examples/*.pfx
+examples/*.pdf
+examples/*.xml
+.php-cs-fixer.cache
+.phpunit.cache/

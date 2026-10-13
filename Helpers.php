@@ -1,5 +1,8 @@
 <?php
-if (! function_exists('now')) {
+
+declare(strict_types = 1);
+
+if (!function_exists('now')) {
     /**
      * Create a new Carbon instance for the current time.
      *

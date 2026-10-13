@@ -1,11 +1,14 @@
 <?php
 
-namespace Hadder\NfseNacional;
+declare(strict_types = 1);
+
+namespace QuantumTecnology\NfseNacional;
 
 interface DpsInterface
 {
     /**
-     * Convert Dps::class data in XML
+     * Convert Dps::class data in XML.
+     *
      * @return string
      */
     public function render();

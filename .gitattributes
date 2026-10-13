@@ -1,0 +1,6 @@
+# As fontes do DANFSe sao binarias (TTF comprimida com gzcompress). Sem esta
+# marcacao o Git pode aplicar conversao de fim de linha nelas e corromper a
+# fonte no checkout — o PDF sai sem texto e o erro so aparece em quem clonou.
+*.z binary
+*.ttf binary
+*.png binary
